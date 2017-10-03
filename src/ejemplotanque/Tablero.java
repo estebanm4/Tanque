@@ -1,10 +1,12 @@
 package ejemplotanque;
 
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -23,6 +25,8 @@ public class Tablero extends JPanel implements ActionListener{
         //Se hace referencia a this porque la misma clase (Tablero) procesa el evento
         this.timer = new Timer(25, this);
         this.tanque = new Tanque();
+        this.tanque.setX(50);
+        this.tanque.setY(50);
         //Registrar evento del Teclado
         setFocusable(true); //Debe estar en modo Focus para que puede detectar el evento
         addKeyListener(new EventosTeclado()); //Inner class que procesa los eventos del teclado
@@ -38,6 +42,13 @@ public class Tablero extends JPanel implements ActionListener{
            if (key == KeyEvent.VK_SPACE) {
             System.out.println("VK_SPACE"); //Se  va usar posteriormente 
            }
+           int angle = e.getKeyCode();
+           if (angle == KeyEvent.VK_W) {
+               this.tanque.setAngulo() = angulo +1;
+           } else if (angle == KeyEvent.VK_S) {
+               this.tanque.setAngulo() = angulo -1;
+           }
+           
         }
         //Cuando se presiona una tecla
         @Override
@@ -46,10 +57,15 @@ public class Tablero extends JPanel implements ActionListener{
         }
     }
     
+     
+     
     //Metodo donde se pintan los objetos 
      @Override
     public void paintComponent(Graphics g){
        super.paintComponent(g);
+       g.drawRect(this.tanque.getX(), this.tanque.getY(), 30, 30);
+       Image imgTanque = LoadImage(tanque.getImagenes()[tanque.getAngulo()]);
+       g.drawImage(imgTanque, tanque.getX(), tanque.getY(), this);
     }
 
     //Metodo que se ejecuta cada vez que se lanza un ActionListener
@@ -58,4 +74,10 @@ public class Tablero extends JPanel implements ActionListener{
         System.out.println("Repaint");
         repaint();
     }
+    
+    public Image LoadImage(String imageName){
+        ImageIcon ii = new ImageIcon(imageName);
+        Image image = ii.getImage();
+        return image;
+    } 
 }
