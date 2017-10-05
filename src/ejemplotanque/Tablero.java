@@ -44,11 +44,12 @@ public class Tablero extends JPanel implements ActionListener{
            }
            int angle = e.getKeyCode();
            if (angle == KeyEvent.VK_W) {
-               this.tanque.setAngulo() = angulo +1;
+               tanque.setAngulo(tanque.getAngulo()+1);
            } else if (angle == KeyEvent.VK_S) {
-               this.tanque.setAngulo() = angulo -1;
+               if (tanque.getAngulo()>= 1){
+               tanque.setAngulo(tanque.getAngulo()-1);
+               }
            }
-           
         }
         //Cuando se presiona una tecla
         @Override
@@ -56,17 +57,17 @@ public class Tablero extends JPanel implements ActionListener{
            
         }
     }
-    
-     
-     
     //Metodo donde se pintan los objetos 
      @Override
     public void paintComponent(Graphics g){
        super.paintComponent(g);
        g.drawRect(this.tanque.getX(), this.tanque.getY(), 30, 30);
+       //do {
        Image imgTanque = LoadImage(tanque.getImagenes()[tanque.getAngulo()]);
        g.drawImage(imgTanque, tanque.getX(), tanque.getY(), this);
-    }
+       //}
+       //while(tanque.getAngulo()< 1 && tanque.getAngulo()>= 18);
+       }
 
     //Metodo que se ejecuta cada vez que se lanza un ActionListener
     @Override
